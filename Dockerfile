@@ -1,7 +1,24 @@
+from debian:stretch as builder
+
+run apt update && \
+    apt install -y haxe sudo git curl wget gnupg2
+run curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+run apt install -y nodejs
+
+run haxelib setup /usr/share/haxelib/ && \
+    haxelib --global install hmm && \
+    haxelib --global run hmm setup && \
+    git clone https://github.com/jonasmalacofilho/git-cache-http-server /tmp/git-cache-http-server && \
+    cd /tmp/git-cache-http-server && \
+    hmm install && \
+    haxe build.hxml && \
+    npm pack 
+
 from node:alpine
 
 run apk add --no-cache git tini
-run npm install -g git-cache-http-server
+copy --from=builder /tmp/git-cache-http-server/*tgz /tmp/
+run npm install -g /tmp/*tgz
 
 expose 8080
 

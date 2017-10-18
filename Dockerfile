@@ -8,7 +8,7 @@ run apt install -y nodejs
 run haxelib setup /usr/share/haxelib/ && \
     haxelib --global install hmm && \
     haxelib --global run hmm setup && \
-    git clone https://github.com/jonasmalacofilho/git-cache-http-server /tmp/git-cache-http-server && \
+    git clone https://github.com/kurzdigital/git-cache-http-server /tmp/git-cache-http-server && \
     cd /tmp/git-cache-http-server && \
     hmm install && \
     haxe build.hxml && \
